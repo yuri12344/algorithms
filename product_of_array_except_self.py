@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         # The length of the input array 
@@ -32,4 +34,24 @@ class Solution:
 """
 Explanation: this is not my implementation, my fist implementantio I got O(log N), which is not good, I mean, its not O(1)
 but I need study this implementantion in order to understeand and recreate it in my way
+"""
+
+class Solution2:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        res = [1] * len(nums) # This determine the size of the array to return
+        prefix = [1]
+        
+        for i in len(nums):
+            res[i] = prefix
+            prefix *= nums[1]
+        
+        postfix = 1
+        for i in range(len(nums)-1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+    
+"""
+Why this code is better? We store the sufix (nothing more then result of every multiplication in the list)
+After that, we iterate over the result of the sufix and multiply by the prefix, which is the result of the multiplication
 """
