@@ -23,8 +23,8 @@ class HashTable:
     def hash(self, key: str):
         total = 0
 
-        for i, char in enumerate(key):
-            total += (ord(char) + i * (self.PRIME_NUMBER * total))
+        for char in key:
+            total = (total * self.PRIME_NUMBER) + ord(char)
         
         return total % self.size
 
