@@ -5,15 +5,30 @@ import ipdb
 class HashTable:
     RE_HASH_FACTOR = 0.7
     RE_HASH_SIZE_MULTIPLY = 2
+    PRIME_NUMBER = 31
 
     def __init__(self, size=10):
         self.size = size
         self.slots = [[] for _ in range(self.size)]
         self.item_count = 0 
 
-    def hash(self, key: str):
+    def hash_problematic(self, key: str):
+        """
+        The problem with this is: The word TRASH will generate same hash to HSART increasing colisions
+        First principle thinking: The position of each chr is ignored, lets supose if its not, it will improve  with less colisions
+        """
         total = sum(ord(char) for char in key)
         return total % self.size
+
+    def hash(self, key: str):
+        total = 0
+
+        for i, char in enumerate(key):
+            total += (ord(char) + i * (self.PRIME_NUMBER * total))
+        
+        return total % self.size
+
+
 
     def _slot_available(self):
         return sum(1 for n in self.slots if not n)
