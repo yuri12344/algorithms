@@ -28,8 +28,6 @@ class HashTable:
         
         return total % self.size
 
-
-
     def _slot_available(self):
         return sum(1 for n in self.slots if not n)
     
